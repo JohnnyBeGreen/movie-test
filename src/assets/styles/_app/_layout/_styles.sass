@@ -1,0 +1,22 @@
+//Layout
+
+//Header
+.app-header
+    box-sizing: border-box
+    height: $header-height
+    background-color: $primary-color
+    @media screen and ( max-width: 575px )
+        height: $header-height-mobile
+                
+
+//Footer
+.app-footer
+    box-sizing: border-box
+    height: $footer-height
+    background-color: $secondary-color
+
+    //Body
+.app-body
+    min-height: calc(100vh - #{$header-height + $footer-height})
+    @media screen and ( max-width: 575px )
+        min-height: calc(100vh - #{$header-height-mobile + $footer-height})

@@ -1,0 +1,19 @@
+//Logo
+.app-logo
+    img, span
+        display: block
+
+.app-logo__header    
+    display: flex
+    flex-direction: column
+    cursor: pointer
+    img
+        width: 250px
+    span
+        color: $invert-color
+        text-transform: uppercase
+        font-size: .8em
+        letter-spacing: 1em
+        margin-top: 5px
+    @media screen and ( max-width: 680px )
+        align-items: center

@@ -1,24 +1,25 @@
 <template>
   <div id="app">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm">1</div>
-        <div class="col-sm">2</div>
-        <div class="col-sm">3</div>
-      </div>
-    </div>
+    <component :is="layout"></component>
   </div>
 </template>
 
 <script>
+import PublicLayout from '@/components/layout/public/Public'
 
 export default {
   name: 'App',
   components: {
+    PublicLayout
+  },
+  data() {
+    return {
+      layout: PublicLayout
+    }
   }
 }
 </script>
 
 <style lang="sass">
-
+  @import './assets/styles/styles'
 </style>
