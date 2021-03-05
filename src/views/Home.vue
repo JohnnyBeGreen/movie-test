@@ -2,22 +2,22 @@
     <div class="container-fluid">
         <section class="container p-0 mt-3">
             <div class="raw d-flex">
-                <div class="col-md-1 p-0 mr-1">
+                <div class="col-md-2 p-0 mr-1">
                     <select class="form-control" id="movie-year-select" v-model="filter.order">
-                        <option value="asc">bottom</option>
-                        <option value="desc">top</option>
+                        <option value="asc">worst of</option>
+                        <option value="desc">best of</option>
                     </select>
                 </div>
-                <div class="col-md-3 p-0 mr-1">
+                <div class="col-md-2 p-0 mr-1">
                     <select class="form-control" id="movie-year-select" v-model="filter.year">
                         <option value="">any year</option>
                         <option v-for="(year, index) in years" :key="index" :value="year">{{year}}</option>
                     </select>
                 </div>
-                <div class="col-md-3 p-0">
-                    <select class="form-control" id="movie-genre-select" v-model="filter.genre">
-                        <option value="">any genre</option>
-                        <option v-for="(genre, index) in genres" :key="index" :value="genre.id">{{genre.name}}</option>
+                <div class="col-md-2 p-0">
+                    <select class="form-control" id="movie-genre-select" v-model="filter.type">
+                        <option value="movie">movies</option>
+                        <option value="tv">serials</option>
                     </select>
                 </div>
             </div>
@@ -50,8 +50,8 @@ export default {
             },
             filter: {
                 year: '',
-                genre: '',
-                sort: 'vote_count',
+                type: 'movie',
+                sort: 'popularity',
                 order: 'asc'
             },
 
@@ -71,18 +71,19 @@ export default {
             this.$store.dispatch('TMDB_MOVIES_GENRES')
                 .then(() => {this.genres = this.$store.getters.TMDB_MOVIES_GENRES.genres})
             
-            this.setCongiguration()
+            this.setConfiguration()
                 .then(() => {
                     this.$store.dispatch('TMDB_MOVIES', {
+                        type: this.filter.type,
                         year: this.filter.year,
                         sort: `${this.filter.sort}.${this.filter.order}`
                     })
                     .then(() => {
-                        this.dataList = this.$store.getters.TMDB_MOVIES
+                        this.dataList = this.$store.getters.TMDB_MOVIES.slice(0, 10)
                     })
                 })
         },
-        setCongiguration() {
+        setConfiguration() {
             return this.$store.dispatch('TMDB_CONFIGURATION')
                 .then(() => {
                     this.configuration.imageBaseUrl = this.$store.getters.TMDB_CONFIGURATION.images.base_url
@@ -91,26 +92,15 @@ export default {
         }       
     },
     watch: {
-        'filter.year': {
+        filter: {
             handler(val) {
                 this.$store.dispatch('TMDB_MOVIES', {
-                    year: val
-                }).then(() => this.dataList = this.$store.getters.TMDB_MOVIES)
-            }
-        },
-        'filter.genre': {
-            handler(val) {
-                this.$store.dispatch('TMDB_MOVIES', {
-                    genre: val
-                }).then(() => this.dataList = this.$store.getters.TMDB_MOVIES)
-            }
-        },
-        'filter.order': {
-            handler(val) {
-                this.$store.dispatch('TMDB_MOVIES', {
-                    sort: `${this.filter.sort}.${val}`
-                }).then(() => this.dataList = this.$store.getters.TMDB_MOVIES)
-            }
+                    type: val.type,
+                    year: val.year,
+                    sort: `${val.sort}.${val.order}`
+                }).then(() => this.dataList = this.$store.getters.TMDB_MOVIES.slice(0, 10))
+            },
+            deep: true
         }
     }
 }

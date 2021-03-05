@@ -3,6 +3,7 @@ import axios from '@/axios'
 const state = {
     TMDB_MOVIES: [],
     TMDB_MOVIE: null,
+    TMDB_MOVIE_CREDITS: null,
     TMDB_MOVIE_IMAGES: null,
     TMDB_MOVIES_GENRES: null
 };
@@ -13,6 +14,9 @@ const getters = {
     },
     TMDB_MOVIE: state => {
         return state.TMDB_MOVIE
+    },
+    TMDB_MOVIE_CREDITS: state => {
+        return state.TMDB_MOVIE_CREDITS
     },
     TMDB_MOVIE_IMAGES: state => {
         return state.TMDB_MOVIE_IMAGES
@@ -29,6 +33,9 @@ const mutations = {
     TMDB_MOVIE: (state, configuration) => {
         return state.TMDB_MOVIE = configuration
     },
+    TMDB_MOVIE_CREDITS: (state, configuration) => {
+        return state.TMDB_MOVIE_CREDITS = configuration
+    },
     TMDB_MOVIE_IMAGES: (state, configuration) => {
         return state.TMDB_MOVIE_IMAGES = configuration
     },
@@ -41,10 +48,9 @@ const actions = {
     TMDB_MOVIES({commit}, data) {
         return axios({
             method: 'GET',
-            url: '/discover/movie',
+            url: `/discover/${data.type}`,
             params: {
-                sort_by: data.sort ? data.sort : 'vote_count.asc',
-                with_genres: data.genre,
+                sort_by: data.sort ? data.sort : null,
                 primary_release_year: data.year ? data.year : null
             }
         })
@@ -61,6 +67,15 @@ const actions = {
         .then(({data}) => {
 
             commit('TMDB_MOVIE', data)
+        })
+    },
+    TMDB_MOVIE_CREDITS({commit}, id) {
+        return axios({
+            method: 'GET',
+            url: `/movie/${id}/credits`
+        })
+        .then(({data}) => {
+            commit('TMDB_MOVIE_CREDITS', data)
         })
     },
     TMDB_MOVIE_IMAGES({commit}, id) {

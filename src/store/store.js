@@ -6,6 +6,7 @@ Vue.use(Vuex)
 import tmdb_configuration from './modules/configuration/tmdb-configuration'
 import tmdb_movies from './modules/movies/tmdb-movies'
 import settings from './modules/settings/settings'
+import ui_modal from './modules/ui/modal/modal'
 
 export default new Vuex.Store({
   state: {},
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   modules: {
     tmdb_configuration,
     tmdb_movies,
-    settings
+    settings,
+    ui_modal
   }
 })

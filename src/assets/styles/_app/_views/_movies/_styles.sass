@@ -55,9 +55,30 @@
         span
             display: block
 
-.app-movie__item__companies
-    display: flex
-    align-items: center
-    flex-wrap: wrap
+.app-movie__item__credits
+    figcaption
+        font-weight: 500
+    ul
+        font-size: .9em
+        display: block
+
+    .app-movie__list__show
+        list-style-type: none
+        color: $accent
+        border-bottom: 1px dashed $accent
+        display: inline-block
+        cursor: pointer
+
+.app-movie__modalImg
     img
-        padding: 10px
+        max-width: 100%
+        // display: block
+    span
+        top: 0
+        right: 0
+        position: absolute
+        font-size: 1.5em
+        color: #fff
+        // &::after
+        //     content: '\2715'
+        
