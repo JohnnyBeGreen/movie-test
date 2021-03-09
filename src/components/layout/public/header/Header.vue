@@ -20,7 +20,7 @@ export default {
     mixins: [isIE],
     methods: {
         getImg() {
-            if (this.isIE) return require('@/assets/files/png/logo.png')
+            if (this.isIE()) return require('@/assets/files/png/logo.png')
             else return require('@/assets/files/svg/logo.svg')
         }
     } 
