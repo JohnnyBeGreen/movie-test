@@ -106,7 +106,7 @@ const actions = {
             url: `/movie/${id}/images`
         })
         .then(({data}) => {
-
+            
             commit('TMDB_MOVIE_IMAGES', data)
         })
     },

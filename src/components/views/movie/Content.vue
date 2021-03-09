@@ -18,14 +18,14 @@
                 <figure v-if="credits.cast.length">
                     <figcaption>Cast</figcaption>
                         <ul class="app-movie__list">
-                            <li v-for="(actor, index) in castOpen ? credits.cast : credits.cast.slice(0, 6)" :key="index"><b>{{ actor.character }}</b> - {{ actor.name }}</li>
+                            <li v-for="(actor, index) in castOpen ? credits.cast : credits.cast.slice(0, 6)" :key="index"><b v-if="actor.character">{{ actor.character + ' - '}}</b> {{ actor.name }}</li>
                             <li v-if="credits.cast.length > 6" class="app-movie__list__show" @click="castOpen = !castOpen">{{castOpen ? 'reduce' : 'show more'}}</li>
                         </ul>
                 </figure>
                 <figure v-if="credits.crew.length">
                     <figcaption>Crew</figcaption>
                         <ul class="app-movie__list">
-                            <li v-for="(crew, index) in crewOpen ? credits.crew : credits.crew.slice(0, 6)" :key="index"><b>{{crew.job}}</b> - {{ crew.name }}</li>
+                            <li v-for="(crew, index) in crewOpen ? credits.crew : credits.crew.slice(0, 6)" :key="index"><b v-if="crew.job">{{crew.job + ' - '}}</b> {{ crew.name }}</li>
                             <li v-if="credits.crew.length > 6" class="app-movie__list__show" @click="crewOpen = !crewOpen">{{crewOpen ? 'reduce' : 'show more'}}</li>
                         </ul>
                 </figure>
@@ -48,9 +48,6 @@ export default {
             castOpen: false,
             crewOpen: false
         }
-    },
-    // mounted() {
-    //     console.log(this.pageData, this.credits, this.configuration)
-    // }
+    }
 }
 </script>

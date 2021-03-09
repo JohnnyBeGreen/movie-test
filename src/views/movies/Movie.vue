@@ -9,20 +9,26 @@
 
         <Content :page-data="pageData" :credits="credits" :configuration="configuration"/>
 
-        <Slider v-if="posters.length" :configuration="configuration" :posters="posters"/>
+        <Slider v-if="!isIE() && posters.length" :configuration="configuration" :posters="posters"/>
+        <Gallery v-if="isIE() && posters.length" :configuration="configuration" :posters="posters"/>
     </div>
 </template>
 
 <script>
 import Content from '@/components/views/movie/Content'
 import Slider from '@/components/views/movie/Slider'
+import Gallery from '@/components/views/movie/Gallery'
+
+import isIE from '@/mixins/utils/browser-is-ie'
 
 export default {
     name: 'Movie',
 
+    mixins: [isIE],
     components: {
         Content,
-        Slider
+        Slider,
+        Gallery
     },
     data() {
         return {
@@ -63,7 +69,7 @@ export default {
                         
                         this.$store.dispatch('TMDB_MOVIE_IMAGES', this.$route.params.id)
                             .then(() => {
-                                this.posters = [...this.$store.getters.TMDB_MOVIE_IMAGES.backdrops]
+                                this.posters = [...this.$store.getters.TMDB_MOVIE_IMAGES.backdrops]                                
                             })
                     }
                     if (this.$route.name === 'tv') {
