@@ -26,6 +26,11 @@ const router = new Router({
             component: () => import('@/views/movies/Movie')
         },
         {
+            path: '/tv/:id',
+            name: 'tv',
+            component: () => import('@/views/movies/Movie')
+        },
+        {
             path: '*',
             redirect: '/'
         }

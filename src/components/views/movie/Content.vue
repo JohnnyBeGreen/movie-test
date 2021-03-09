@@ -9,7 +9,7 @@
         </div>
 
         <div class="col col-sm app-movie__item__text">
-            <h3 class="app-movie__item__title">{{ pageData.title }}</h3>
+            <h3 class="app-movie__item__title">{{ pageData.title || pageData.name }}</h3>
             <span v-if="pageData.release_date" class="mb-2 text-muted">{{ pageData.release_date | moment("MMMM DD, YYYY") }}</span>
             <span class="mb-1">{{ pageData.overview }}</span>
             <span class="text-muted">vote average:&nbsp;{{ pageData.vote_average }}</span>
@@ -18,14 +18,14 @@
                 <figure v-if="credits.cast.length">
                     <figcaption>Cast</figcaption>
                         <ul class="app-movie__list">
-                            <li v-for="(actor, index) in castOpen ? credits.cast : credits.cast.slice(0, 6)" :key="index">{{ actor.name }}</li>
+                            <li v-for="(actor, index) in castOpen ? credits.cast : credits.cast.slice(0, 6)" :key="index"><b>{{ actor.character }}</b> - {{ actor.name }}</li>
                             <li v-if="credits.cast.length > 6" class="app-movie__list__show" @click="castOpen = !castOpen">{{castOpen ? 'reduce' : 'show more'}}</li>
                         </ul>
                 </figure>
                 <figure v-if="credits.crew.length">
                     <figcaption>Crew</figcaption>
                         <ul class="app-movie__list">
-                            <li v-for="(crew, index) in crewOpen ? credits.crew : credits.crew.slice(0, 6)" :key="index">{{ crew.name }}</li>
+                            <li v-for="(crew, index) in crewOpen ? credits.crew : credits.crew.slice(0, 6)" :key="index"><b>{{crew.job}}</b> - {{ crew.name }}</li>
                             <li v-if="credits.crew.length > 6" class="app-movie__list__show" @click="crewOpen = !crewOpen">{{crewOpen ? 'reduce' : 'show more'}}</li>
                         </ul>
                 </figure>
@@ -48,6 +48,9 @@ export default {
             castOpen: false,
             crewOpen: false
         }
-    }
+    },
+    // mounted() {
+    //     console.log(this.pageData, this.credits, this.configuration)
+    // }
 }
 </script>

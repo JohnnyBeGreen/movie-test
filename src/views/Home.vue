@@ -24,7 +24,7 @@
         </section>
         <section class="container pt-4 pb-5">
             <template v-for="(item, index) in dataList">
-                <ListItem :key="index" :item="item" :configuration="configuration"/>
+                <ListItem :key="index" :item="item" :configuration="configuration" :type="filter.type"/>
             </template>
         </section>
     </div>

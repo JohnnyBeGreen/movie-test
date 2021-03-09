@@ -3,7 +3,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><router-link to="/" tag="a">Home</router-link></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ pageData.title }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ pageData.title || pageData.name }}</li>
             </ol>
         </nav>
 
@@ -50,20 +50,40 @@ export default {
         pageInit() {            
             this.setConfiguration()
                 .then(() => {
-                    this.$store.dispatch('TMDB_MOVIE', this.$route.params.id)
-                        .then(() => {
-                            this.pageData = this.$store.getters.TMDB_MOVIE
-                        })
-                    
-                    this.$store.dispatch('TMDB_MOVIE_CREDITS', this.$route.params.id)
-                        .then(() => {
-                            this.credits = { cast: this.$store.getters.TMDB_MOVIE_CREDITS.cast, crew: this.$store.getters.TMDB_MOVIE_CREDITS.crew }
-                        })
-                    
-                    this.$store.dispatch('TMDB_MOVIE_IMAGES', this.$route.params.id)
-                        .then(() => {
-                            this.posters = [...this.$store.getters.TMDB_MOVIE_IMAGES.backdrops]
-                        })
+                    if (this.$route.name === 'movie') {
+                        this.$store.dispatch('TMDB_MOVIE', this.$route.params.id)
+                            .then(() => {
+                                this.pageData = this.$store.getters.TMDB_MOVIE
+                            })
+                        
+                        this.$store.dispatch('TMDB_MOVIE_CREDITS', this.$route.params.id)
+                            .then(() => {
+                                this.credits = { cast: this.$store.getters.TMDB_MOVIE_CREDITS.cast, crew: this.$store.getters.TMDB_MOVIE_CREDITS.crew }
+                            })
+                        
+                        this.$store.dispatch('TMDB_MOVIE_IMAGES', this.$route.params.id)
+                            .then(() => {
+                                this.posters = [...this.$store.getters.TMDB_MOVIE_IMAGES.backdrops]
+                            })
+                    }
+                    if (this.$route.name === 'tv') {
+                        this.$store.dispatch('TMDB_TV', this.$route.params.id)
+                            .then(() => {
+                                // console.log(this.$store.getters.TMDB_TV)
+                                this.pageData = this.$store.getters.TMDB_TV
+                            })
+                        this.$store.dispatch('TMDB_TV_CREDITS', this.$route.params.id)
+                            .then(() => {
+                                // console.log(this.$store.getters.TMDB_TV_CREDITS)
+                                this.credits = { cast: this.$store.getters.TMDB_TV_CREDITS.cast, crew: this.$store.getters.TMDB_TV_CREDITS.crew }
+                            })
+                        
+                        this.$store.dispatch('TMDB_TV_IMAGES', this.$route.params.id)
+                            .then(() => {
+                                // console.log(this.$store.getters.TMDB_TV_IMAGES)
+                                this.posters = [...this.$store.getters.TMDB_TV_IMAGES.backdrops]
+                            })
+                    }
                 })
         },
         setConfiguration() {

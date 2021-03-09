@@ -4,7 +4,7 @@
         <swiper class="swiper" :options="swiperOption">
             <swiper-slide v-for="(poster, index) in posters" :key="index">
                 <img 
-                    :src="configuration.imageBaseUrl + configuration.posterSizes[isModal ? 3 : 2] + poster.file_path" 
+                    :src="configuration.imageBaseUrl + configuration.posterSizes[isModal ? 3 : 3] + poster.file_path" 
                     @click="!isModal ? openImage(configuration.imageBaseUrl + 'original' + poster.file_path) : false"
                     :class="{'w-100': isModal}"/>
             </swiper-slide>
@@ -26,7 +26,7 @@ export default {
     data() {
       return {
         swiperOption: {
-          slidesPerView: this.$store.getters.SETTINGS_IS_MOBILE ? '1' : '5',
+          slidesPerView: this.$store.getters.SETTINGS_IS_MOBILE ? '1' : '3',
         //   centeredSlides: true,
           spaceBetween: 20,
           pagination: {
